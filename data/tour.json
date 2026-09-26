@@ -1,0 +1,440 @@
+{
+  "meta": {
+    "title": "The Keppler Rooms",
+    "subtitle": "A private, guided tour of four chromolithographs by Joseph Keppler, from the covers and centerfolds of Puck — with time to look, and room to wonder.",
+    "artist": "Joseph Keppler (1838–1894)",
+    "motto": "What fools these mortals be!",
+    "voice": "en-US-AndrewNeural",
+    "rate": "-8%",
+    "version": 1,
+    "credits": [
+      "Images: Library of Congress, Prints & Photographs Division. No known restrictions on publication.",
+      "Narration written for this gallery; spoken by a synthesized guide. Historical substance drawn from the sources below.",
+      "Your written reflections are stored only in this browser (localStorage) and never leave your device."
+    ],
+    "sources": [
+      { "label": "“Sheol,” Puck, v.17 no.429 (May 27, 1885) — loc.gov/item/2011661750/", "url": "https://www.loc.gov/item/2011661750/" },
+      { "label": "The Return of the “Prodigal Father” (1883) — loc.gov/item/92520934/", "url": "https://www.loc.gov/item/92520934/" },
+      { "label": "The Bosses of the Senate (1889) — loc.gov/item/2002718861/", "url": "https://www.loc.gov/item/2002718861/" },
+      { "label": "Puck's Own Yorktown Celebration (1881) — loc.gov/item/2012647294/", "url": "https://www.loc.gov/item/2012647294/" },
+      { "label": "Richard Samuel West, Satire on Stone: The Political Cartoons of Joseph Keppler (University of Illinois Press, 1988)", "url": "" },
+      { "label": "Michael A. Kahn & Richard Samuel West, What Fools These Mortals Be: The Story of Puck (IDW/Library of American Comics, 2014)", "url": "" },
+      { "label": "Stephen Hess & Milton Kaplan, The Ungentlemanly Art: A History of American Political Cartoons (Macmillan, 1968; rev. 1975)", "url": "" },
+      { "label": "Peter C. Marzio, The Democratic Art: Pictures for a 19th-Century America — Chromolithography 1840–1900 (Godine, 1979)", "url": "" },
+      { "label": "Roger A. Fischer, “Them Damned Pictures”: Explorations in American Political Cartooning (1996)", "url": "" },
+      { "label": "Joshua Brown, Beyond the Lines: Pictorial Reporting, Everyday Life, and the Crisis of Gilded Age America (University of California Press, 2002)", "url": "" },
+      { "label": "Richard R. John, “Robber Barons Redux: Antimonopoly Reconsidered,” Enterprise & Society 13:1 (2012)", "url": "https://academiccommons.columbia.edu/doi/10.7916/D8NK4XMJ" },
+      { "label": "U.S. Senate historical essays on Puck and “The Bosses of the Senate” (senate.gov, archived)", "url": "https://web.archive.org/web/20210115141241/https://www.senate.gov/art-artifacts/historical-images/political-cartoons-caricatures/puck-intro.htm" },
+      { "label": "Darwin caricature catalogue — John van Wyhe, Darwin Online; Darwin Correspondence Project, Cambridge", "url": "https://darwin-online.org.uk/EditorialIntroductions/vanWyhe_Caricatures_of_Darwin.html" },
+      { "label": "The English Revised Version (OT, 1885), preface and Sheol decisions — bible-researcher.com", "url": "https://www.bible-researcher.com/" },
+      { "label": "Jeff Peachey, survey of the Puck Building and the J. Ottmann Lithographing Co. remains (2017)", "url": "https://jeffpeachey.com/2017/12/12/the-puck-building-and-the-remains-of-the-j-ottmann-lithographing-company/" },
+      { "label": "Visual Thinking Strategies — Housen & Yenawine (2013); Jennifer L. Roberts, “The Power of Patience,” Harvard Magazine (2013)", "url": "https://www.harvardmagazine.com/2013/11/the-power-of-patience" }
+    ]
+  },
+
+  "welcome": {
+    "id": "welcome",
+    "ghostImage": "sheol",
+    "notes": [
+      {
+        "head": "How this tour asks questions",
+        "text": "The guide's method descends from Visual Thinking Strategies, developed by the psychologist Abigail Housen and the museum educator Philip Yenawine from thousands of recorded interviews with people looking at art: “What's going on in this picture? What do you see that makes you say that? What more can we find?” Its premise — that the viewer's own noticing is the engine of the encounter — also drives the “slow art” movement. The art historian Jennifer L. Roberts asks her students to sit with a single painting for three hours: “Just because you have looked at something doesn't mean that you have seen it.”",
+        "cite": "Housen & Yenawine, Visual Thinking Strategies (Harvard Education Press, 2013); Jennifer L. Roberts, “The Power of Patience,” Harvard Magazine, Nov–Dec 2013"
+      },
+      {
+        "head": "What the guide speaks from",
+        "text": "The narration was written for this gallery from primary records at the Library of Congress and from the scholarship on Keppler and Puck: Richard Samuel West's Satire on Stone (1988), the standard monograph; Kahn & West's What Fools These Mortals Be (2014); Hess & Kaplan's The Ungentlemanly Art (1968), the founding history of American political cartooning; Peter Marzio's The Democratic Art (1979) on chromolithography; and peer-reviewed studies such as Richard R. John's “Robber Barons Redux” (Enterprise & Society, 2012). Facts are cited in each room's notes; the full list waits at the tour's end.",
+        "cite": "See “Colophon” at the tour's end"
+      },
+      {
+        "head": "A note on honesty",
+        "text": "Puck was a hero of the free press and, at times, a vehicle of prejudice — its pages mocked Chinese immigrants and Catholics viciously even while attacking corruption. The tour says this plainly, once, and moves on; the pictures are not served by either excuse or ambush.",
+        "cite": "On Puck's contradictions: West, Satire on Stone (1988); Kahn & West (2014)"
+      }
+    ],
+    "beats": [
+      {
+        "id": "w1",
+        "kind": "tell",
+        "audio": "Hello — and welcome. I'm going to walk with you through four rooms of color: four great pictures by Joseph Keppler, the Viennese immigrant who taught America to laugh in print. This is a private tour. Just you, the pictures, and me. If you can, put on your headphones and let the room go quiet. We will be going slowly. That is the whole method. The tour takes about half an hour — and you can stop whenever you like. The gallery will remember where you left off."
+      },
+      {
+        "id": "w2",
+        "kind": "tell",
+        "audio": "A word about how this works. In each room I'll show you a picture, and mostly I will stay quiet while you look. Then I'll ask what you saw — and I mean it: there are no wrong answers here. Not out of politeness, but because what you notice is the only thing this tour is actually about. Say your answers out loud, if you're alone. Or write them into the journal that appears with each question. It stays on your device; no one else ever reads it. When you're ready to move on, you press continue — the gallery never rushes you. Ready? Then let's begin."
+      }
+    ]
+  },
+
+  "stops": [
+    {
+      "id": "sheol",
+      "room": "Room One",
+      "title": "Sheol",
+      "date": "May 27, 1885",
+      "medium": "Chromolithograph centerfold, Puck, v. 17, no. 429",
+      "loc": "https://www.loc.gov/item/2011661750/",
+      "image": "sheol",
+      "credit": "Library of Congress, LC-DIG-ppmsca-28201",
+      "notes": [
+        {
+          "head": "The premise, exactly",
+          "text": "The English Revised Version of the Bible — the only ever authorized revision of the King James — appeared in installments: New Testament May 17, 1881; Old Testament May 17–19, 1885. The Hebrew word Sheol occurs about 64 times in the Old Testament; the King James Version renders it “hell” some 31 times, “grave” some 31 times, “pit” 3 times. The English revisers transliterated “Sheol” itself 29 times out of 64, judging that “hell” — in its common sense of the place of torment — “would lead to inevitable misunderstanding.” Puck's centerfold followed within roughly a week.",
+          "cite": "Revised Version Preface (1885), primary text via bible-researcher.com; LOC record 2011661750"
+        },
+        {
+          "head": "Puck's printed caption",
+          "text": "“According to the new version of the Old Testament, many respectable people who have been writhing in the old fashioned Hell will have to be transferred to the pleasant watering-place known as ‘Sheol.’ This is Puck's notion of the evolution of Hell to Sheol.” — The last word, “evolution,” is a pun with Darwin visibly aboard the ferry.",
+          "cite": "Library of Congress, printed caption, LC-DIG-ppmsca-28201"
+        },
+        {
+          "head": "Darwin, in Puck's pages",
+          "text": "The Darwin scholar John van Wyhe's caricature catalogue records this print and notes that Puck, unlike its rival the San Francisco Wasp, “treated Darwin as a hero.” Darwin died April 19, 1882 — three years before this cartoon; Puck had drawn him once before, in 1883. In the park he sits quietly by a tree with John Stuart Mill leaning beside him.",
+          "cite": "van Wyhe, “Caricatures of Charles Darwin,” Darwin Online; Darwin Correspondence Project, Cambridge"
+        },
+        {
+          "head": "The freshest souls aboard",
+          "text": "Fanny Elssler, the Austrian ballerina whose 1840–42 American tour set off “Elsslermania,” died in Vienna on November 27, 1884 — barely six months before this centerfold. Jacques Offenbach, shown with his sheet music, had died in October 1880; his Orpheus in the Underworld (1858) had already made Hades comic, its can-can the most famous music ever written for the underworld.",
+          "cite": "Elssler: standard biographies (d. Nov 27, 1884); LOC figure list"
+        },
+        {
+          "head": "How the color was made",
+          "text": "Chromolithography: each color drawn on its own polished Bavarian limestone, chemically fixed, and printed in sequence in perfect registration. The American Antiquarian Society notes that chromolithographs of the era typically used between eight and forty stones; the curator Peter Marzio, whose The Democratic Art is the standard history, counted chromos running to twenty colors and more — museum-grade color, printed by the millions. Puck's plates — three color pages a week, every week — were printed by the J. Ottmann Lithographing Company, by 1887 housed in the Puck Building on Houston Street: contemporary guides called it the largest lithographic plant under one roof in the world.",
+          "cite": "American Antiquarian Society; Marzio, The Democratic Art (Godine, 1979); King's Handbook of New York (1892); building survey by Jeff Peachey (2017)"
+        },
+        {
+          "head": "The traditions behind it",
+          "text": "The sunny shore is the classical Elysian Fields as the Dutch and French painted garden parties — Watteau's Embarkation for Cythera, where lovers board a ferry to the island of love, is the picture's polite ancestor. The dark gated left corner descends from the century's standard underworld imagery — Gustave Doré's engravings for Dante and Paradise Lost. Keppler, Vienna Academy trained, borrows the whole European inheritance and files one American eviction notice against it.",
+          "cite": "Curator's framing after the standard iconographic literature; Doré's Dante (1861) and Paradise Lost (1866)"
+        },
+        {
+          "head": "What Puck itself believed",
+          "text": "Puck's editorial pages welcomed the translators' decision, explaining that Sheol “is not Hell, but simply the abode of the dead, the Hades of the Greeks” — and relished the discomfort of preachers who had thundered on a word the scholars had now hedged. Keppler returned to the vein in 1888 (“Rapid Transit to Sheol,” after a sensational Trinity Church sermon).",
+          "cite": "Darwin Project gloss on Puck's editorial stance; Cornell P.J. Mode persuasive-cartography collection"
+        }
+      ],
+      "beats": [
+        {
+          "id": "s0",
+          "kind": "card",
+          "audio": "Room one. Sheol. A centerfold from Puck — the humor weekly Keppler drew and edited — dated May twenty-seventh, eighteen eighty-five. Printed in color, from limestone stones, for a dime."
+        },
+        {
+          "id": "s1",
+          "kind": "tell",
+          "audio": "First — before any words of mine — let's look. I'm going to be quiet for half a minute. Notice where your eye lands first. It almost never lands where you expect."
+        },
+        {
+          "id": "s2",
+          "kind": "silence",
+          "dwell": 28,
+          "display": "Just look."
+        },
+        {
+          "id": "s3",
+          "kind": "ask",
+          "audio": "So. What did you see? What is going on in this picture? Take the first answer that comes — the honest one, not the impressive one. Say it to yourself, or write it here. I'll wait.",
+          "question": "What did you see? What is going on in this picture?",
+          "placeholder": "The first three things my eye found were…",
+          "hint": "If you'd like a thought: try naming the first three things your eye found, in order. That order is a map of you as much as of the picture."
+        },
+        {
+          "id": "s4",
+          "kind": "tell",
+          "focus": { "x": 0.17, "y": 0.2, "scale": 3.3 },
+          "audio": "Now let me tell you what New York knew, the week this went on sale. Eight days earlier — after fifteen years of work by scholars on both sides of the Atlantic — a new English Bible had appeared. The Revised Version. And in its Old Testament, the translators made one quiet, enormous decision. Where the old Bible said hell, they had simply written the Hebrew word, untranslated: Sheol. Not a pit of fire. Just… the place of the dead. Pulpits and newspapers caught fire over it — some claimed hell had been edited out of the Bible. Puck answered in color, and its caption ends with a wink you will need later: “Puck's notion of the evolution of Hell to Sheol.” Now, here is Keppler's first joke. Look into the shadows, upper left. The landlord of the old hell: horns, wings, chin resting in his hand. The furnaces behind him are going cold; the great gate of hell is chained and padlocked; and nailed to his rock, a very American sign: “This business is removed to Sheol — opposite.” Not banished. Relocated. Like a dry-goods store."
+        },
+        {
+          "id": "s5",
+          "kind": "ask",
+          "focus": { "x": 0.17, "y": 0.2, "scale": 3.3 },
+          "audio": "Stay with him a moment. The fires are dying, the boat traffic has moved across the water… and he is not raging. He is pondering. If this were your neighbor, what would you say had happened to him?",
+          "question": "The Devil sits in shadow, chin in hand. What happened to him?",
+          "placeholder": "If he lived next door, I'd say…",
+          "hint": "Keppler's older devils were medieval — furious, monstrous. This one is something new: a proprietor watching the trade move to a better quarter. Gilded Age New York was full of him. Failure, drawn without fire."
+        },
+        {
+          "id": "s6",
+          "kind": "tell",
+          "focus": { "x": 0.28, "y": 0.66, "scale": 2.7 },
+          "audio": "Now follow the water down, to the ferry. The boatman is Charon — Greek, very old, very tired. And look at his passengers. Voltaire, in his smile. Frederick the Great. Socrates, pleased to be anywhere. Offenbach, with sheet music under his arm. Rousseau. John Stuart Mill. Goethe. Heine. Galileo — finally somewhere the earth is allowed to move. Jefferson. Thomas Paine. George Sand, in her gentlemen's clothes. Hypatia, the mathematician a mob once killed for asking. And the dancer Fanny Elssler — a Viennese, like Keppler — who had died only six months before this picture: the freshest soul aboard. And there — do you see the label? Darwin. Three years dead. The man newspapers still called the most dangerous in the world, riding a ferry to sunshine. Every reader of Puck knew these people instantly. They were the ones who had asked questions. And every pulpit had a list."
+        },
+        {
+          "id": "s7",
+          "kind": "tell",
+          "focus": { "x": 0.62, "y": 0.4, "scale": 2.1 },
+          "audio": "And what is Sheol? Look where the light lands. Not clouds, not harps — a watering place. A bandstand. Boats, strollers, dancers on the lawn, a grand pavilion on the hill. A ballerina in white is dancing — Elssler again, at work. Two lovers walk out of the trees arm in arm: Dante's Paolo and Francesca, still together, damnation expired. And by a tree — find him — a quiet man sits alone, another philosopher leaning beside him. Darwin. The most dangerous man in the world, in the shade, thinking. Keppler has painted the afterlife as a summer resort on the Hudson. Notice the palette: cold blues where hell used to be, and warm gold here, where the company is. Two worlds in one picture — and the border between them is simply light. A curator would also want you to see how this was made. Chromolithography: every color you are looking at sat on its own slab of Bavarian limestone, drawn by hand, printed in perfect alignment — one stone per color, pass after pass through the presses of the Ottmann works, the finest color shop in American magazines. This is not an illustration of a joke. It is a painting that happens to be one — and it sold for ten cents."
+        },
+        {
+          "id": "s8",
+          "kind": "ask",
+          "audio": "So — the big question of this room. Look at the whole picture again, and ask: who is Keppler putting in heaven? Heretics. Skeptics. A dancer. A philosopher the state executed. Now turn it toward yourself. Who would you put on the next ferry? And who — be honest — would be surprised to find you had saved them a seat?",
+          "question": "Who belongs on the next ferry?",
+          "placeholder": "I'd save a seat for…",
+          "hint": "Notice what Keppler values: everyone aboard earned their exile by thinking for themselves. His heaven is a committee of the condemned. What would yours be a committee of?"
+        },
+        {
+          "id": "s9",
+          "kind": "reflect",
+          "audio": "One last thing in this room. Something in this picture has been looking back at you for a few minutes now — a face, a color, a joke. Which one? And does it ask you to do anything — this week, not in the abstract? I'll wait. When you're ready, we'll go and meet the man himself.",
+          "question": "What is this picture asking of you — if anything?",
+          "placeholder": "The thing looking back at me is…"
+        }
+      ]
+    },
+
+    {
+      "id": "prodigal",
+      "room": "Room Two",
+      "title": "The Return of the “Prodigal Father”",
+      "date": "October 10, 1883",
+      "medium": "Chromolithograph centerfold, Puck, v. 14, no. 344 — drawn by himself",
+      "loc": "https://www.loc.gov/item/92520934/",
+      "image": "prodigal_father",
+      "credit": "Library of Congress, LC-DIG-ppmsca-28432",
+      "notes": [
+        {
+          "head": "The scene, from the catalog record",
+          "text": "The Library of Congress description identifies the returning editor greeted by his staff — among them, waving farewell in the doorway, the Rev. T. DeWitt Talmage, then Brooklyn's most famous preacher and a favorite Puck target — and the office's “tormentors”: the young staff cartoonists, Frederick Burr Opper among them, who would carry American cartooning into the next century. A goat attends the luggage.",
+          "cite": "Library of Congress, item 92520934 (LC-DIG-ppmsca-28432)"
+        },
+        {
+          "head": "The life, in one paragraph",
+          "text": "Vienna, February 1, 1838: a baker's son whose first pictures were drawn in sugar on cakes. Academy of Fine Arts; early drawings in the Vienna humor sheet Kikeriki. When painting wouldn't feed him, the theater — scene painter, sometime comedian, touring the Tyrol, restoring monastery paintings. His father, on the wrong side of 1848, emigrated to a general store at New Frankfort, northern Missouri; Joseph followed in 1867. St. Louis: acting, two failed German satirical papers, a first Puck that lasted about a year. New York, 1872; Puck reborn September 1876 in German, March 14, 1877 in English. He edited and drew it until his death in New York on February 19, 1894.",
+          "cite": "Dictionary of American Biography; Smithsonian Libraries biography; NYU Keppler Family Papers finding aid"
+        },
+        {
+          "head": "The counter-argument to Nast",
+          "text": "Where Thomas Nast worked in black-and-white wood engraving — hard line, moral war — Keppler built Puck on lithography: drawn on stone, painterly, and in color. Harper's Weekly ran one cartoon; Puck ran three, in color, every week, to a circulation above eighty thousand in the early 1880s. Historians of the Senate put it plainly: Puck “employed lithography in place of wood engraving,” and the magazine “burst into full, eye-catching color.”",
+          "cite": "U.S. Senate historical essay on Puck (archived); Hess & Kaplan, The Ungentlemanly Art (1968); Fischer, Them Damned Pictures (1996); circulation: GWU Special Collections; Kahn & West (2014)"
+        },
+        {
+          "head": "A word on names",
+          "text": "“J. Keppler” after 1894 usually means the son — Udo J. Keppler (1872–1956), Puck's art director and co-owner, who took the name Joseph Keppler Jr. after his father's death. Every work in this gallery is by the father; attribution confusion is common in reproductions.",
+          "cite": "Lambiek Comiclopedia; standard Puck scholarship"
+        }
+      ],
+      "beats": [
+        {
+          "id": "p0",
+          "kind": "card",
+          "audio": "Room two. The return of the prodigal father, at the Puck office — drawn by himself. October tenth, eighteen eighty-three."
+        },
+        {
+          "id": "p1",
+          "kind": "tell",
+          "focus": { "x": 0.36, "y": 0.5, "scale": 2.5 },
+          "audio": "Every gallery should introduce you to its maker — and Keppler, typically, did it as a gag. The man in the checked suit, fresh off the steamer, being mobbed by his own staff: that is the artist, drawn by the artist. And the joke is mostly autobiography. Vienna, eighteen thirty-eight. A baker's son — his first pictures were drawn in sugar, on cakes. He studied at the Academy of Fine Arts; and when painting wouldn't feed him, he went where a clever Viennese goes: the theater. Scene painter. Sometime comedian. Touring the Tyrol, restoring old paintings in monasteries for bread."
+        },
+        {
+          "id": "p2",
+          "kind": "tell",
+          "focus": { "x": 0.62, "y": 0.45, "scale": 2.3 },
+          "audio": "Eighteen forty-eight. His father, on the wrong side of a failed revolution, leaves Vienna for a general store in northern Missouri. Joseph follows in eighteen sixty-seven. Saint Louis: more theater, two failed satirical papers, a first little Puck that dies inside a year. He comes east to New York — and in eighteen seventy-six, Puck is reborn. In German first; in English from March of eighteen seventy-seven. Sixteen pages, ten cents. In this scene he has just returned from a European trip, and his staff — the office called them his tormentors — is sweeping him off his feet. Somewhere down there, notice, the office goat is already eating his luggage. A prodigal son gets the fatted calf. A prodigal father, apparently, gets dessert."
+        },
+        {
+          "id": "p3",
+          "kind": "tell",
+          "focus": { "x": 0.5, "y": 0.55, "scale": 1.6 },
+          "audio": "One comparison, because it explains how all of these pictures look. Keppler's great rival was Thomas Nast — brilliant, furious Nast, at Harper's Weekly, crusading in black and white. Wood engraving: hard lines, moral war. Puck was the counter-argument. Lithography — drawn on stone, flowing, painterly — and color. Where Harper's printed one cartoon, Puck printed three, in color, every week, to more than eighty thousand readers. Nast preached. Keppler staged. He had spent years in the theater, and every centerfold is a scene: a set, a cast, a lighting plot, an entrance for the lead. Even his own homecoming is a stage direction — the star, returning to his company, for the applause."
+        },
+        {
+          "id": "p4",
+          "kind": "ask",
+          "audio": "And here is a question worth sitting with. He could have drawn himself a conqueror. Instead: a slightly ridiculous father, hugged by clerks, robbed by a goat. What does making yourself the joke buy a satirist — in eighteen eighty-three, or this morning?",
+          "question": "What does making yourself the joke buy you?",
+          "placeholder": "When I laugh at myself first, I…",
+          "hint": "An old rule of satire: the jester who can laugh at himself earns the right to laugh at kings. The armor is thin on purpose, so you can see the person inside. It buys trust — or sets a trap. You decide."
+        },
+        {
+          "id": "p5",
+          "kind": "tell",
+          "audio": "One honest note, though — because looking slowly means looking honestly. Puck fought bosses and bribe-takers, and mostly it stood up for the outsider. But not always. Its pages could be cruel to the very immigrants and minorities its own founders had once been. A gallery, like a person, can be brave and blind in the same afternoon. Keep both eyes open here. I do.",
+          "focus": { "x": 0.5, "y": 0.55, "scale": 1.15 }
+        },
+        {
+          "id": "p6",
+          "kind": "reflect",
+          "audio": "Keppler kept around him a roomful of people whose job was to make him the joke. Where do you get your truth told? And how do you take it, when it arrives — in color, in public, on a Wednesday?",
+          "question": "Who tells you the truth about yourself? How do you take it?",
+          "placeholder": "My truth-tellers are…"
+        }
+      ]
+    },
+
+    {
+      "id": "bosses",
+      "room": "Room Three",
+      "title": "The Bosses of the Senate",
+      "date": "January 23, 1889",
+      "medium": "Chromolithograph centerfold, Puck — lithograph by J. Ottmann after Keppler's drawing",
+      "loc": "https://www.loc.gov/item/2002718861/",
+      "image": "bosses_senate",
+      "credit": "Library of Congress, LC-USZC4-494",
+      "notes": [
+        {
+          "head": "The record",
+          "text": "“Lithograph by J. Ottmann after drawing by J. Keppler. Illus. in: Puck, (1889 Jan. 23).” The bags are labeled Standard Oil, and the Copper, Sugar, Iron, Steel Beam, Tin, Coal, and Paper Bag trusts, looming over the senators of the 50th Congress. The banner over their heads parodies Lincoln at Gettysburg; the door at left, labeled “People's Entrance,” is bolted.",
+          "cite": "Library of Congress, item 2002718861 (LC-USZC4-494)"
+        },
+        {
+          "head": "Why it is famous",
+          "text": "The Senate's own historians call it “a frequently reproduced cartoon, long a staple of textbooks and studies of Congress,” one that “reflected the phenomenal growth of American industry in the 1880s, but also the disturbing trend toward concentration of industry.” In the peer-reviewed literature, Richard R. John's reappraisal of antimonopoly, “Robber Barons Redux” (Enterprise & Society, 2012), keeps the cartoon in circulation as visual evidence for the trust question that produced the Sherman Antitrust Act of 1890, a year after the drawing.",
+          "cite": "U.S. Senate historical essays (archived, senate.gov); Richard R. John, “Robber Barons Redux: Antimonopoly Reconsidered,” Enterprise & Society 13:1 (2012), open access via Columbia Academic Commons"
+        },
+        {
+          "head": "Reading the scale",
+          "text": "The cartoon's grammar is proportion: power drawn as body size, in a chamber where the Constitution made the states equal. A curator would also point at the borrowed text — Lincoln's “of the people, by the people, for the people” re-cut with one substitution — a technique Keppler used again and again: take the most sacred words available, change one, and let the reader hear the damage.",
+          "cite": "After West, Satire on Stone (1988), on Keppler's methods"
+        },
+        {
+          "head": "The money-bag man",
+          "text": "The bloated sack with a human face was already a stock figure of Gilded Age satire — capital personified, in top hat, too rich to walk. Keppler's addition was the seating chart: the trusts not outside the chamber, not at the bar, but in it — the gallery's worth of them, in the members' own air.",
+          "cite": "Gilded Age visual-culture literature; cf. Hess & Kaplan, The Ungentlemanly Art (1968)"
+        }
+      ],
+      "beats": [
+        {
+          "id": "b0",
+          "kind": "card",
+          "audio": "Room three. The bosses of the Senate. January twenty-third, eighteen eighty-nine."
+        },
+        {
+          "id": "b1",
+          "kind": "tell",
+          "audio": "Washington. The Senate chamber — and something is wrong with the seating. Look at the back rows. Those are not senators. Those are money bags. Great bloated sacks, in top hats, with human faces — and name tags. The copper trust. The sugar trust. Iron. Steel beam. Tin. Coal. Paper bag. And largest of all, on the left: Standard Oil. Below them, at their little desks, the actual United States Senate — drawn the size of chess pieces. Keppler hasn't drawn a metaphor. He has drawn a seating chart."
+        },
+        {
+          "id": "b2",
+          "kind": "ask",
+          "audio": "Before I say another word — where did your eye go first? The bags, or the little men? And which of the two is having the better day?",
+          "question": "Where did your eye land — the giants, or the senators?",
+          "placeholder": "My eye went first to…",
+          "hint": "Scale is the argument. In this room, size is not a property of bodies; it is a property of power. Your eye obeyed the picture's physics before your mind could vote."
+        },
+        {
+          "id": "b3",
+          "kind": "tell",
+          "focus": { "x": 0.5, "y": 0.08, "scale": 2.9 },
+          "audio": "Now look up, over their heads. Keppler borrows the most solemn music America knows — Lincoln at Gettysburg: government of the people, by the people, for the people — and swaps one word. This is a Senate of the monopolists, by the monopolists, for the monopolists. Twenty-five years after the speech, a humor weekly quietly amends the Constitution of American memory. That is not decoration at the top of the picture. That is the indictment. Everything else — the bags, the pygmies — is evidence."
+        },
+        {
+          "id": "b4",
+          "kind": "tell",
+          "focus": { "x": 0.2, "y": 0.46, "scale": 3.6 },
+          "audio": "And now look to the far left, low, half in shadow. A door. A modest, ordinary door, with a sign: people's entrance. Bolted. Barred. The one door in the whole chamber that belongs to you. Follow Keppler's arithmetic. Four years earlier — you were there — he emptied hell and gave the condemned a summer resort. Now he builds the reverse: a chamber where the public is the damned, locked out of its own Senate. It may be the angriest drawing in this gallery, and nobody in it is shouting. There is not one angry face. The anger is yours."
+        },
+        {
+          "id": "b5",
+          "kind": "ask",
+          "audio": "That door. Suppose you could unbolt it — today. Who do you send through first? A voter? A reporter? A child, who will ask what the sacks are? An accountant, with a lantern? Choose one. And tell me why.",
+          "question": "The People's Entrance is bolted. You have the key — who goes through first?",
+          "placeholder": "I'd send through…",
+          "hint": "Keppler's own answer took a year: the Sherman Antitrust Act of eighteen ninety began the long fight to shrink the bags. Cartoons don't pass laws. They change what people can see — and seeing is where every law begins."
+        },
+        {
+          "id": "b6",
+          "kind": "tell",
+          "audio": "A year later came the Sherman Antitrust Act — the first law that tried, seriously, to shrink the bags. Historians still argue how much a drawing can do. But this one has never gone out of print. It is in every textbook, and it gets redrawn every decade the bags return — new top hats, same anatomy. Money, wearing a person. Keppler drew it in eighteen eighty-nine, decades before the law had a phrase for it, and people have been recognizing it ever since.",
+          "focus": { "x": 0.5, "y": 0.35, "scale": 1.0 }
+        },
+        {
+          "id": "b7",
+          "kind": "reflect",
+          "audio": "Last question in this room — and it is the room's real subject. Where is the bolted door now? Not in eighteen eighty-nine. This week — in your country, your city, your life. Does this picture ask anything of you? It is allowed to ask nothing. That, too, is an answer. I'll wait.",
+          "question": "Where is the bolted door now? What is this picture asking of you?",
+          "placeholder": "The bolted door I keep passing is…"
+        }
+      ]
+    },
+
+    {
+      "id": "yorktown",
+      "room": "Room Four",
+      "title": "Puck's Own Yorktown Celebration",
+      "date": "October 19, 1881",
+      "medium": "Chromolithograph centerfold, Puck, v. 10, no. 241",
+      "loc": "https://www.loc.gov/item/2012647294/",
+      "image": "yorktown",
+      "credit": "Library of Congress, LC-DIG-ppmsca-28522",
+      "notes": [
+        {
+          "head": "The caption, verbatim",
+          "text": "“His army of contributors passing in review before our foreign guests.” The Library's description fills the parade: Jay Gould and Vanderbilt marching as a visiting emperor and king, attended by Cyrus Field and Russell Sage; the star-route robbers led by Dorsey; the assessment robbers; Robeson; Grant riding among the presidential possibilities; the stalwart Republicans arm in arm with “Rum, Romanism, and Rebellion”; Butler's tumble-bug; the Tammany tiger; Jefferson Davis with the stars and bars — and above, on a cloud, the devil and his wife, “on their way to Europe.”",
+          "cite": "Library of Congress, item 2012647294 (LC-DIG-ppmsca-28522)"
+        },
+        {
+          "head": "The occasion",
+          "text": "The Yorktown Centennial, October 1881: the 100th anniversary of Cornwallis's surrender, celebrated with warships, French and German delegations, and a monument then under construction. The small bearded figure bowing in the reviewing stand is William M. Evarts, guest of honor; Cornelius Vanderbilt appears as a spectator in a box.",
+          "cite": "LOC record; centennial histories"
+        },
+        {
+          "head": "The mascot and the motto",
+          "text": "Puck takes his name and motto from Shakespeare's A Midsummer Night's Dream — “Lord, what fools these mortals be!” (Act 3, Scene 2). Keppler's sprite — a golden child in a top hat, admiring himself in a hand mirror — still stands in cast iron on the corner of the old Puck Building, by the sculptor Henry Baerer.",
+          "cite": "A Midsummer Night's Dream, III.ii; Puck Building histories; NYC landmark designation (1983)"
+        },
+        {
+          "head": "After the curtain",
+          "text": "Keppler ran the special World's Fair Puck at the Chicago exposition of 1893; the strain broke his health, and he died in New York on February 19, 1894, aged 56. Puck continued under Udo J. Keppler until 1918 (bought by Hearst in 1916). The old Puck Building still stands at 295 Lafayette Street — and a book conservator's survey found the lithographic stones still on site, below the presses' floor.",
+          "cite": "NYU Keppler Family Papers; building survey by Jeff Peachey (2017)"
+        }
+      ],
+      "beats": [
+        {
+          "id": "y0",
+          "kind": "card",
+          "audio": "Room four — the last room. Puck's own Yorktown celebration. October nineteenth, eighteen eighty-one."
+        },
+        {
+          "id": "y1",
+          "kind": "tell",
+          "audio": "October, eighteen eighty-one. The centennial of Yorktown — the victory that sealed the Revolution — and the young republic throws itself a party: warships on the river, French guests in the stands, cannon salutes, a monument going up. Keppler looks at all that official glory and asks the obvious question: where is my parade? So Puck stages one. His entire company — every stock character, every victim, every monster of ten years of satire — passes in review before the grandstand. The caption calls them, with a perfectly straight face, “his army of contributors.”"
+        },
+        {
+          "id": "y2",
+          "kind": "tell",
+          "focus": { "x": 0.4, "y": 0.62, "scale": 2.1 },
+          "audio": "Let's inspect the column. There — a squad of the era's worst capitalists: Jay Gould and Vanderbilt marching as a visiting emperor and king, with Cyrus Field and Russell Sage bowing behind them. The star-route robbers, led by Dorsey; the assessment robbers; Robeson. On white horses, the presidential possibilities — Grant riding high among them. The stalwart Republicans, arm in arm with rum, Romanism, and rebellion. Butler's tumble-bug, industriously at work. The Tammany tiger. Jefferson Davis, flying the stars and bars. It is a police lineup the size of a parade — and every suspect showed up voluntarily. On time. In costume."
+        },
+        {
+          "id": "y3",
+          "kind": "ask",
+          "audio": "Now — you are the reviewing officer. Your eye passes down the column. Who do you salute? And, honestly: who would you put in this parade, from your own time?",
+          "question": "Who gets a place in this parade? Who would you add from now?",
+          "placeholder": "I'd salute… I'd add…",
+          "hint": "This is Keppler's self-portrait as a body of work: his fame is a parade of the people he caught. When you imagine your own life's work passing in review — what is marching? And what would you rather not be seen in the column?"
+        },
+        {
+          "id": "y4",
+          "kind": "tell",
+          "focus": { "x": 0.74, "y": 0.3, "scale": 2.5 },
+          "audio": "Look right — the reviewing stand, beneath the unfinished monument. The small bearded gentleman bowing in his top hat is William Evarts, guest of honor for the official celebration. And around the boxes, the period's royalty, come as spectators — Cornelius Vanderbilt among them, an emperor of the age, watching from a box seat. And see how the whole thing is built: water, sails, bunting, autumn light. Keppler learned that painting theater backdrops in the Tyrol, and he never stopped. This is the craft you have been leaning into all tour: stone after stone, color after color — chromolithography at full sail, printed in the Puck Building on Houston Street, the largest lithographic works under one roof anywhere. When a new centerfold went up in a shop window in New York, people stopped on the sidewalk to read color. Standing in the street. Looking at a comic paper, like a painting."
+        },
+        {
+          "id": "y5",
+          "kind": "tell",
+          "focus": { "x": 0.26, "y": 0.58, "scale": 3.0 },
+          "audio": "Two small figures, before we go. There — leading the column by the little white horse — rides Puck himself: the golden sprite from Shakespeare, the one who circles the quarrels of mortals and laughs. Keppler borrowed him for a mascot and gave him the magazine's motto: what fools these mortals be. He has been our host all along; we have simply been too tall to notice him."
+        },
+        {
+          "id": "y6",
+          "kind": "tell",
+          "focus": { "x": 0.76, "y": 0.13, "scale": 3.1 },
+          "audio": "And now — upper right, on a cloud, sailing away over the parade. A horned gentleman and his lady, on their way, the caption tells us, to Europe. But you have met him. Four rooms ago he was sitting in the dark in Sheol — unemployed, watching the good customers leave. He got a vacation. And that is Keppler's whole cosmology in one cloud: devils come back as tourists, tyrants come back as marchers, and the laugh goes on."
+        },
+        {
+          "id": "y7",
+          "kind": "tell",
+          "audio": "The last scenes come quickly now. Eighteen ninety-three: Chicago, the World's Fair — Keppler produces his special fair edition, and it breaks his health. February of eighteen ninety-four, he is dead, at fifty-six. Puck survives him another twenty years under his son Udo. The old Puck Building still stands on Lafayette Street — the golden sprite still on the corner in cast iron, holding his mirror — and a book conservator who went looking, not long ago, found the old lithographic stones still down there, where the presses stood. Every color of the rainbow, folded back into rock."
+        },
+        {
+          "id": "y8",
+          "kind": "reflect",
+          "audio": "So — the last question of the tour, and then the gallery is yours. Of everything your eyes met today, what do you want to keep? Not the most important thing. The thing that stuck. A devil's slump. A bolted door. A goat mid-theft. A dancer on a ferry. A motto. Write it in your journal. And one more, quietly: did anything here ask you to do something? If it did, you know which room it was in. … Thank you for looking slowly with me. Come back whenever you like. The pictures will wait — and you will answer their questions differently next time, because you will have changed. What fools we mortals be. It is kind of the pictures to find us charming anyway.",
+          "question": "What will you keep from this gallery? What is it asking of you?",
+          "placeholder": "The thing I'm keeping is…"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Keppler Rooms — a slow tour of Puck’s chromolithographs</title>
+<meta name="description" content="A private, guided audio tour of four chromolithographs by Joseph Keppler from Puck magazine — with time to look, and room to wonder. Images from the Library of Congress.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎭</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ═══════════════ LANDING ═══════════════ -->
+<section id="landing" class="scene is-active">
+  <div class="landing-ghost" id="landing-ghost"></div>
+  <div class="landing-vignette"></div>
+  <div class="landing-inner">
+    <p class="motto" aria-hidden="true">“What fools these mortals be!”</p>
+    <h1 class="landing-title">The Keppler Rooms</h1>
+    <p class="landing-lede">
+      A private, guided audio tour of four chromolithographs by <strong>Joseph&nbsp;Keppler</strong>,
+      from the covers and centerfolds of <em>Puck</em> —<br>
+      with time to look, and room to wonder.
+    </p>
+    <p class="landing-artist">Joseph Keppler (1838–1894) · <em>Puck</em>, New York · 1881–1889</p>
+    <div class="landing-actions">
+      <button id="btn-begin" class="btn btn-primary">Begin the tour<span class="btn-sub">about 25 minutes · headphones on</span></button>
+      <button id="btn-resume" class="btn btn-ghost" hidden>Resume<span class="btn-sub" id="resume-at"></span></button>
+    </div>
+    <ul class="landing-meta">
+      <li>The guide will ask you questions — there are no wrong answers</li>
+      <li>Your written thoughts stay on this device, always</li>
+      <li>Images: Library of Congress · no known restrictions</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════ STAGE / GALLERY ═══════════════ -->
+<section id="stage" class="scene" hidden>
+  <div id="viewer" aria-label="Artwork viewer — drag to pan, scroll or pinch to zoom"></div>
+
+  <div id="room-card" class="room-card" hidden>
+    <p class="room-card-room" id="room-card-room"></p>
+    <h2 class="room-card-title" id="room-card-title"></h2>
+    <p class="room-card-date" id="room-card-date"></p>
+    <p class="room-card-medium" id="room-card-medium"></p>
+  </div>
+
+  <div id="silence-note" class="silence-note" hidden>
+    <p class="silence-word">Just look.</p>
+    <div class="silence-bar"><i id="silence-fill"></i></div>
+    <button id="silence-skip" class="btn btn-text">I’ve looked — continue</button>
+  </div>
+
+  <header id="hud-top">
+    <div class="hud-room" id="hud-room">
+      <span class="hud-room-label" id="hud-room-label"></span>
+      <span class="hud-room-title" id="hud-room-title"></span>
+    </div>
+    <nav class="hud-actions" aria-label="Tour tools">
+      <button id="btn-contents" class="hud-btn" title="Contents (C)" aria-label="Contents">◦ Contents</button>
+      <button id="btn-transcript" class="hud-btn" title="Transcript (T)" aria-label="Transcript">◦ Guide</button>
+      <button id="btn-notes" class="hud-btn" title="Notes &amp; sources (N)" aria-label="Notes and sources">◦ Notes</button>
+      <button id="btn-exit" class="hud-btn" title="Leave the tour" aria-label="Leave">◦ Leave</button>
+    </nav>
+  </header>
+
+  <aside id="transcript" class="panel" hidden aria-label="Transcript">
+    <div class="panel-head"><h3>The guide, verbatim</h3><button class="panel-x" data-close="transcript" aria-label="Close">✕</button></div>
+    <div class="panel-body"><p id="transcript-text" class="transcript-text"></p></div>
+  </aside>
+
+  <aside id="contents" class="panel" hidden aria-label="Contents">
+    <div class="panel-head"><h3>The Gallery</h3><button class="panel-x" data-close="contents" aria-label="Close">✕</button></div>
+    <div class="panel-body">
+      <ol class="contents-list" id="contents-list"></ol>
+    </div>
+  </aside>
+
+  <aside id="notes" class="panel" hidden aria-label="Notes and sources">
+    <div class="panel-head"><h3 id="notes-title">Notes &amp; sources</h3><button class="panel-x" data-close="notes" aria-label="Close">✕</button></div>
+    <div class="panel-body"><div id="notes-body"></div></div>
+  </aside>
+
+  <footer id="console">
+    <button id="btn-prev" class="console-btn" title="Previous beat (←)" aria-label="Previous">⏮</button>
+    <button id="btn-play" class="console-play" title="Play / pause (space)" aria-label="Play or pause">
+      <svg id="icon-play" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+      <svg id="icon-pause" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true" style="display:none"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+    </button>
+    <button id="btn-next" class="console-btn" title="Next beat (→)" aria-label="Next">⏭</button>
+    <div class="console-mid">
+      <div class="beat-dots" id="beat-dots" role="tablist" aria-label="Beats in this room"></div>
+      <div class="now-line"><span id="now-playing"></span><span id="time-left"></span></div>
+    </div>
+  </footer>
+
+  <div id="ask-card" class="ask" hidden>
+    <div class="ask-inner" role="dialog" aria-modal="false" aria-labelledby="ask-q">
+      <p class="ask-kicker" id="ask-kicker">A question, for you alone</p>
+      <h3 class="ask-q" id="ask-q"></h3>
+      <textarea id="ask-input" rows="3" placeholder="" aria-label="Your private reflection (optional)"></textarea>
+      <div class="ask-tools">
+        <button id="hint-btn" class="btn btn-text">a thought, if you’d like one</button>
+        <span class="ask-private">private · saved on this device</span>
+      </div>
+      <p id="ask-hint" class="ask-hint" hidden></p>
+      <button id="btn-continue" class="btn btn-primary">Continue the tour</button>
+    </div>
+  </div>
+
+  <div id="gesture-note" hidden>❧ &nbsp;tap anywhere to keep listening</div>
+</section>
+
+<!-- ═══════════════ FINALE ═══════════════ -->
+<section id="finale" class="scene" hidden>
+  <div class="finale-inner">
+    <p class="motto">“What fools these mortals be!”</p>
+    <h2>Your reflections</h2>
+    <p class="finale-lede">Everything you wrote, exactly as you wrote it. <span class="finale-note">Nothing has left this device.</span></p>
+    <div id="journal-list" class="journal-list"></div>
+    <div class="finale-actions">
+      <button id="btn-export" class="btn btn-ghost">Download my journal</button>
+      <button id="btn-clear-journal" class="btn btn-text">Clear reflections</button>
+    </div>
+    <hr class="finale-rule">
+    <div class="finale-cols">
+      <div>
+        <h3>The rooms</h3>
+        <ol class="contents-list finale-rooms" id="finale-rooms"></ol>
+      </div>
+      <div>
+        <h3>Colophon</h3>
+        <ul class="credits" id="finale-credits"></ul>
+      </div>
+    </div>
+    <p class="finale-sign">The pictures will wait.<br>Come back — you’ll answer differently next time, because you will have changed.</p>
+  </div>
+</section>
+
+<script src="js/lqip.js?v=15dfdfef"></script>
+<script src="js/tour-data.js?v=31538333"></script>
+<script src="js/viewer.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

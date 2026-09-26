@@ -1,0 +1,19 @@
+# heavy LOC master scans — kept locally, not for git
+originals/
+# scratch: previews, QA screenshots, venv, scratch json
+work/
+# the original one-off download (and any future master scans dropped at root)
+master-pnp-ppmsca-28200-28201u.tif
+master-*.tif
+*.log
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# os / editor noise
+.DS_Store
+Thumbs.db
+*.swp
