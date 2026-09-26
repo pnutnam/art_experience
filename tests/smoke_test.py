@@ -36,6 +36,15 @@ MAX_SINGLE_BYTES = 6 * 1024 * 1024
 # Mirrors MIN_SCALE / MAX_SCALE in js/viewer.js.
 MIN_SCALE, MAX_SCALE = 1.0, 5.5
 
+# Cloudflare sits in front of the deployed site and 403s the default
+# "Python-urllib" agent, which would fail every check for reasons that have
+# nothing to do with the site. A smoke test emulates a visitor, so send a
+# visitor's user-agent.
+USER_AGENT = (
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/126 Safari/537.36"
+)
+
 failures: list[str] = []
 notes: list[str] = []
 
@@ -58,7 +67,7 @@ def note(msg: str) -> None:
 def load_tour_data(source: str | None) -> dict:
     """Parse js/tour-data.js from the working tree or from a URL."""
     if source:
-        raw = urllib.request.urlopen(source.rstrip("/") + "/js/tour-data.js").read().decode()
+        raw = fetch(source.rstrip("/") + "/js/tour-data.js").decode()
     else:
         raw = (ROOT / "js" / "tour-data.js").read_text()
     m = re.search(r"window\.TOUR_DATA\s*=\s*(\{.*\})\s*;?\s*$", raw.strip(), re.S)
@@ -229,15 +238,16 @@ def check_js_syntax() -> None:
         check(f"{f.name} parses", r.returncode == 0, r.stderr.strip().splitlines()[0] if r.stderr else "")
 
 
+def fetch(url: str) -> bytes:
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return r.read()
+
+
 def check_live(url: str) -> None:
     """Verify the same ship set is actually served and healthy."""
     print(f"\nlive deployment — {url}")
     base = url.rstrip("/")
-
-    def head(path: str):
-        req = urllib.request.Request(base + "/" + path, method="GET")
-        with urllib.request.urlopen(req, timeout=30) as r:
-            return r.status, int(r.headers.get("content-length") or 0)
 
     paths = ["index.html", "css/style.css", "js/app.js", "js/viewer.js", "js/tour-data.js", "js/lqip.js"]
     data = load_tour_data(base)
@@ -248,9 +258,9 @@ def check_live(url: str) -> None:
     bad = []
     for p in paths:
         try:
-            status, size = head(p)
-            if status != 200 or size == 0:
-                bad.append(f"{p} -> {status}, {size}B")
+            size = len(fetch(base + "/" + p))
+            if size == 0:
+                bad.append(f"{p} -> empty body")
         except Exception as e:  # noqa: BLE001
             bad.append(f"{p} -> {e}")
     check(f"all {len(paths)} ship files served 200 with a body", not bad, "; ".join(bad[:5]))

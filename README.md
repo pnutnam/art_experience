@@ -139,6 +139,15 @@ python3 tests/smoke_test.py
 python3 tests/smoke_test.py --url https://your-host/keppler-rooms/
 ```
 
+Behind Cloudflare, the HTML is never edge-cached (`DYNAMIC`) but the JS, images,
+and audio are, with a 4-hour default TTL. After a redeploy, purge the zone cache
+(or wait it out) or returning visitors keep the old build for up to 4 hours.
+
+**Live:** https://art.nathanputnam.com — served from `/var/www/art.nathanputnam.com`
+on the `pve` host (69.30.195.154), vhost in `bare-metal-server/server/nginx/`.
+SSH to that host is firewall-whitelisted; reach it via the staging LXC with
+`ssh -J root@69.30.195.157 root@69.30.195.154` (also encoded in `~/.ssh/config`).
+
 Total payload: ~18 MB images + ~6 MB audio. No build step, no dependencies,
 no external requests — fonts are the system serif stack, so the page makes zero
 third-party calls.
