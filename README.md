@@ -32,10 +32,24 @@ for audio preloading.)
 
 ## Deploy to a website
 
-Upload everything except `originals/` and `work/`:
+The runtime needs exactly four things:
 
 ```
 index.html  css/  js/  assets/
+```
+
+Ship those and nothing else. Everything under `originals/`, `work/`, and
+`master-*.tif` is heavy source material (~700 MB) and must not be uploaded;
+`build/`, `data/`, `research/`, and `context/` are the tour's source and are safe
+to publish but are not needed to serve it.
+
+```bash
+# rsync the ship set only
+rsync -av --delete index.html css js assets user@host:/var/www/keppler-rooms/
+
+# verify before and after
+python3 tests/smoke_test.py
+python3 tests/smoke_test.py --url https://your-host/keppler-rooms/
 ```
 
 Total payload: ~18 MB images + ~6 MB audio. No build step, no dependencies,
@@ -49,11 +63,19 @@ Socratic questions, curator hints, **per-room scholar notes** (shown in the in-a
 "Notes & sources" drawer, key `N`), camera focus points (normalized `x, y, scale`
 per beat), and dwell times for silent-looking beats.
 
-After editing the script, regenerate audio (only changed beats re-synthesize):
+After editing the script, regenerate audio (only changed beats re-synthesize).
+One-time setup first — `work/` is gitignored scratch, so a fresh clone has no
+virtualenv yet:
 
 ```bash
+python3 -m venv work/venv
+work/venv/bin/pip install -r requirements.txt   # edge-tts only
+
 work/venv/bin/python build/generate_audio.py
 ```
+
+Also needs `ffmpeg`/`ffprobe` on `PATH` (durations and non-MP3 conversion).
+Synthesis needs internet at generation time only.
 
 The script uses [edge-tts](https://github.com/rany2/edge-tts) (Microsoft neural voices,
 needs internet at generation time only). Voice/rate are set in `tour.json` → `meta.voice` /

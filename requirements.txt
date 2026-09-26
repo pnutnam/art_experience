@@ -1,0 +1,10 @@
+# Build-time tooling for The Keppler Rooms.
+# The shipped site has zero runtime dependencies — these are only needed to
+# (re)generate narration audio or import externally synthesized voices.
+#
+#   python3 -m venv work/venv
+#   work/venv/bin/pip install -r requirements.txt
+#
+# Tested with Python 3.12.3 and edge-tts 7.2.8.
+
+edge-tts>=7.0,<8

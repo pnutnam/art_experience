@@ -72,6 +72,7 @@
   viewer.onNeedFull = () => requestFull();
 
   let fullTimer = null;
+  let paintedImage = null;   // which work the viewer is currently showing
   function currentImageName() {
     const s = stopAt(cur.stop);
     return s.image || null;
@@ -95,20 +96,21 @@
   audio.addEventListener('ended', () => onBeatFinished());
   audio.addEventListener('timeupdate', () => updateClock());
 
-  // Quiet health check at boot: mark beats whose MP3 is absent or tiny so the
-  // tour never surprises the visitor mid-room; transient failures later are
-  // handled per-beat by the error listener and self-heal on the next beat.
-  (async function healthCheck() {
-    const ids = [];
-    TOUR.stops.forEach(s => s.beats.forEach(b => { if (b.audio) ids.push(b.id); }));
-    await Promise.all(ids.map(async (id) => {
-      try {
-        const r = await fetch(DATA.audioBase + id + '.mp3', { method: 'HEAD' });
-        const len = parseInt(r.headers.get('content-length') || '0', 10);
-        if (!r.ok || len < 2000) missingBeats.add(id);
-      } catch { /* no network read — let per-beat fallback decide */ }
-    }));
-    if (missingBeats.size) console.warn('[keppler] beats without healthy audio (device voice will speak them):', [...missingBeats]);
+  // Boot sanity check — zero network. Whether each MP3 actually exists is a
+  // deploy-time concern (tests/smoke_test.py), and a file that fails to load in
+  // the browser is caught per-beat by the error listener below and spoken with
+  // the device voice for that beat only. What is worth checking here is that the
+  // baked build is internally consistent, so a stale js/tour-data.js is surfaced
+  // before the visitor is already standing in a room.
+  (function healthCheck() {
+    const durations = DATA.durations || {};
+    const stale = [];
+    TOUR.stops.forEach(s => s.beats.forEach(b => { if (b.audio && !durations[b.id]) stale.push(b.id); }));
+    if (stale.length) {
+      console.warn('[keppler] beats with no baked duration — js/tour-data.js is stale, rerun build/generate_audio.py:', stale);
+    } else {
+      console.info('[keppler] audio build consistent · ' + Object.keys(durations).length + ' beats');
+    }
   })();
 
   function playRecorded(beat) {
@@ -251,14 +253,17 @@
     const stop = stopAt(s);
     const beat = beatAt(s, b);
 
-    // image / room setup happens on beat 0 of a stop
-    if (b === 0 && !stop.isWelcome) enterStopVisuals(stop);
+    // Image / room setup. Entering a stop at beat 0 resets the camera to the
+    // room's establishing view. A visitor can also land on a later beat without
+    // passing through beat 0 (resuming mid-room after a reload), so paint
+    // whenever the viewer isn't showing this stop's work yet.
+    if (stop.isWelcome) {
+      paintStopImage(DATA.welcome.ghostImage);
+    } else if (b === 0 || paintedImage !== stop.image) {
+      paintStopImage(stop.image);
+    }
 
     el.stage.classList.toggle('welcome-mode', !!stop.isWelcome);
-    if (stop.isWelcome) {
-      const name = DATA.welcome.ghostImage;
-      viewer.setImage({ lqip: LQIP[name], mid: DATA.images[name].mid }, ASPECTS[name]);
-    }
 
     renderHUD();
     renderBeat(beat);
@@ -272,8 +277,8 @@
     }
   }
 
-  function enterStopVisuals(stop) {
-    const name = stop.image;
+  function paintStopImage(name) {
+    paintedImage = name;
     viewer.setImage({ lqip: LQIP[name], mid: DATA.images[name].mid }, ASPECTS[name]);
     clearTimeout(fullTimer);
     fullTimer = setTimeout(requestFull, 7000); // prefetch for smooth zooming
