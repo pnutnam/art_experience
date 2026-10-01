@@ -19,6 +19,7 @@ import json
 import re
 import subprocess
 import sys
+import hashlib
 import urllib.request
 from pathlib import Path
 
@@ -226,6 +227,109 @@ def check_view_logic(data: dict) -> None:
     )
 
 
+def check_accessibility(data: dict) -> None:
+    """Guard the fixes that keep this thing usable without sight or a mouse.
+
+    Cheap static checks: a regression here is invisible to the asset-graph and
+    data-contract checks, and invisible to anyone who can see and click.
+    """
+    print("\naccessibility")
+    html = (ROOT / "index.html").read_text()
+    app = (ROOT / "js" / "app.js").read_text()
+    viewer = (ROOT / "js" / "viewer.js").read_text()
+
+    # Every artwork needs a real description. The whole point of the site is
+    # looking at pictures; an empty alt made it invisible to screen readers.
+    for stop in data["stops"]:
+        alt = (stop.get("alt") or "").strip()
+        check(f"'{stop['id']}' has artwork alt text", len(alt) >= 60, f"{len(alt)} chars")
+    check("welcome has backdrop alt text", len((data["welcome"].get("alt") or "").strip()) >= 30)
+    check("alt text is passed to the viewer", "stop.alt" in app and "setImage(" in viewer)
+    check("viewer sets alt on the image tier", "this.mid.alt" in viewer)
+
+    # aria-label is ignored on a generic div, so the label has to be on
+    # something with a role.
+    check("viewer container has a role", re.search(r'id="viewer"[^>]*\brole=', html) is not None)
+    check("viewer frame is focusable", re.search(r"tabIndex\s*=\s*0", viewer) is not None)
+    check("viewer frame has a role", "setAttribute('role'" in viewer)
+    check("viewer is keyboard operable", "keydown" in viewer and "zoomBy" in viewer)
+    check("focus ring is styled", ":focus-visible" in (ROOT / "css" / "style.css").read_text())
+
+    # A tablist must contain tabs. These are beat jumpers, not tabs, so the
+    # group role plus aria-current is the honest pattern.
+    check("beat dots are not a tablist", 'role="tablist"' not in html)
+    check("beat dots use a group role", re.search(r'id="beat-dots"[^>]*role="group"', html) is not None)
+    check("active beat marked with aria-current", "aria-current" in app)
+
+    # Panels announce their state.
+    check("beat changes announced politely", re.search(r'id="now-playing"[^>]*aria-live', html) is not None)
+    check("panel toggles initialised at boot", app.count("syncPanelButtons()") >= 2)
+
+
+def check_data_durability(data: dict) -> None:
+    """A written reflection must survive every way of leaving its card.
+
+    The only paths that used to save were the Continue button and a 350ms
+    debounce, so typing and then pressing → or Leave threw the answer away.
+    """
+    print("\njournal durability")
+    app = (ROOT / "js" / "app.js").read_text()
+    check("a draft flush helper exists", "function flushDraft(" in app)
+    check("beat changes flush the draft", re.search(r"function goTo\([^)]*\)\s*\{\s*flushDraft\(\)", app) is not None)
+    check("finishing the tour flushes the draft", re.search(r"function finishTour\(\)\s*\{\s*flushDraft\(\)", app) is not None)
+    check("leaving the tour flushes the draft", re.search(r"btnExit\.addEventListener\('click', \(\) => \{\s*flushDraft\(\)", app) is not None)
+    check("page unload flushes the draft", "pagehide" in app)
+
+
+def check_image_tier_fallback(data: dict) -> None:
+    """The hi-res tier must degrade, not stampede.
+
+    The old guard compared the resolved absolute .src against a relative path,
+    so it was always true and a missing image re-requested itself in a loop
+    (measured: 999 error events in 3.2s).
+    """
+    print("\nimage tier fallback")
+    viewer = (ROOT / "js" / "viewer.js").read_text()
+    check("no absolute-vs-relative src comparison",
+          "this.full.src !== paths.full" not in viewer)
+    check("fallback walks a bounded candidate list",
+          re.search(r"const candidates = \[paths\.webp, paths\.full\]", viewer) is not None)
+    # The retry guard must be a counter against the candidate count, not a
+    # comparison against a URL. Assert the shape, not the surrounding comment.
+    check("fallback gives up rather than retrying",
+          re.search(r"if \(tier >= candidates\.length\)", viewer) is not None)
+    check("exhausted fallback drops the hi-res src",
+          re.search(r"if \(tier >= candidates\.length\)\s*\{[^}]*removeAttribute\('src'\)",
+                    viewer) is not None)
+
+
+def check_cache_busting(data: dict) -> None:
+    """Every ship-set reference must carry a content hash.
+
+    index.html is served DYNAMIC and everything else is cached for 4h, so an
+    unbusted app.js or style.css is a code change visitors never receive.
+    """
+    print("\ncache busting")
+    html = (ROOT / "index.html").read_text()
+    stale = []
+    for rel in ("js/lqip.js", "js/tour-data.js", "js/viewer.js", "js/app.js",
+                "css/style.css"):
+        m = re.search(rf'{re.escape(rel)}(?:\?v=([0-9a-f]+))?', html)
+        if not m:
+            continue
+        if not m.group(1):
+            stale.append(f"{rel} (no ?v=)")
+            continue
+        actual = hashlib.sha1((ROOT / rel).read_bytes()).hexdigest()[:8]
+        if m.group(1) != actual:
+            stale.append(f"{rel} (index says {m.group(1)}, file is {actual})")
+    check("all ship-set refs hashed and current", not stale, "; ".join(stale))
+
+    gen = (ROOT / "build" / "generate_audio.py").read_text()
+    for rel in ("js/app.js", "js/viewer.js", "css/style.css"):
+        check(f"build re-hashes {rel}", rel in gen)
+
+
 def check_js_syntax() -> None:
     print("\njs syntax")
     try:
@@ -287,6 +391,10 @@ def main() -> int:
     check_data_contract(data)
     check_assets(data)
     check_view_logic(data)
+    check_accessibility(data)
+    check_data_durability(data)
+    check_image_tier_fallback(data)
+    check_cache_busting(data)
     check_js_syntax()
     if args.url:
         check_live(args.url)

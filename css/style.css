@@ -134,6 +134,8 @@ button { font-family: inherit; color: inherit; background: none; border: none; c
 }
 #viewer:active { cursor: grabbing; }
 .viewer-frame { position: absolute; inset: 0; }
+/* the frame is focusable so the picture is keyboard-operable — show it */
+.viewer-frame:focus-visible { outline: 2px solid var(--gold); outline-offset: -3px; }
 .v-tier {
   position: absolute; top: 0; left: 0;
   user-select: none; -webkit-user-drag: none;

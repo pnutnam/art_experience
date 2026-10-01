@@ -130,21 +130,27 @@ async def main():
     )
     print(f"wrote {OUT_JS} ({OUT_JS.stat().st_size//1024} KB)")
 
-    # Cache-bust the generated files in index.html so returning visitors
-    # always get fresh tour data (static hosting sends no useful headers).
+    # Cache-bust every ship-set reference in index.html. index.html itself is
+    # served DYNAMIC, so it is the only reliable place a version can live — but
+    # a redeploy that changes app.js or style.css must reach visitors too, or
+    # Cloudflare serves them from cache for the full 4h TTL with no way out.
+    # Hash the whole ship set, not just the two generated files.
     import re
-    import hashlib
     idx = ROOT / "index.html"
     html = idx.read_text()
-    for fname in ("tour-data.js", "lqip.js"):
-        fhash = hashlib.sha1((ROOT / "js" / fname).read_bytes()).hexdigest()[:8]
+    for rel in ("js/lqip.js", "js/tour-data.js", "js/viewer.js", "js/app.js",
+                "css/style.css"):
+        fhash = hashlib.sha1((ROOT / rel).read_bytes()).hexdigest()[:8]
+        if rel not in html:
+            print(f"  .. note: {rel} is not referenced in index.html")
+            continue
         html = re.sub(
-            rf"js/{fname}(\?v=[0-9a-f]+)?",
-            f"js/{fname}?v={fhash}",
+            rf"({re.escape(rel)})(\?v=[0-9a-f]+)?",
+            rf"\g<1>?v={fhash}",
             html,
         )
     idx.write_text(html)
-    print("cache-busted index.html script tags")
+    print("cache-busted index.html references (lqip, tour-data, viewer, app, css)")
 
 
 if __name__ == "__main__":

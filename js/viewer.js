@@ -15,14 +15,23 @@
       this.container = container;
       this.el = document.createElement('div');
       this.el.className = 'viewer-frame';
+      // Focusable so the picture is reachable and operable from the keyboard:
+      // arrows pan, +/- zoom, 0 returns to the whole sheet. Without this the
+      // artwork is pointer-only, and ←/→ are spoken for by beat navigation.
+      this.el.tabIndex = 0;
+      this.el.setAttribute('role', 'group');
       this.el.innerHTML =
         '<img class="v-tier v-lqip" alt="" draggable="false">' +
-        '<img class="v-tier v-mid" alt="" draggable="false">' +
+        '<img class="v-tier v-mid" draggable="false">' +
         '<img class="v-tier v-full" alt="" draggable="false">';
       container.appendChild(this.el);
       this.lqip = this.el.querySelector('.v-lqip');
       this.mid = this.el.querySelector('.v-mid');
       this.full = this.el.querySelector('.v-full');
+      // alt lives on the mid tier only: it is always present, and it is the
+      // one image a screen reader should announce. The blur and the hi-res
+      // layer are the same picture, so they stay silent duplicates.
+      this.mid.alt = '';
 
       this.aspect = 1.5;           // w/h of current image
       this.cam = { x: 0.5, y: 0.5, scale: 1 };
@@ -37,13 +46,14 @@
       this._bind();
     }
 
-    setImage(paths, aspect) {
+    setImage(paths, aspect, altText) {
       this._fullLoaded = false;
       this._fullRequested = false;
       this.full.classList.remove('is-on');
       this.full.removeAttribute('src');
       this.lqip.src = paths.lqip || '';
       this.mid.src = paths.mid;
+      this.mid.alt = altText || '';
       this.aspect = aspect || 1.5;
       this.cam = { x: 0.5, y: 0.5, scale: 1 };
       this.apply();
@@ -57,10 +67,24 @@
         this.full.classList.add('is-on');
       };
       this.full.onload = done;
+      // Try the WebP, then the JPEG, then stop and keep the 1600px mid tier.
+      // The earlier guard compared `this.full.src` (resolved to an absolute
+      // URL) against a relative path, so it never matched and a missing file
+      // re-requested itself in a tight loop — hundreds of 404s a second.
+      // A plain counter bounds it: two candidates, two failures, then quiet.
+      const candidates = [paths.webp, paths.full].filter(Boolean);
+      let tier = 0;
       this.full.onerror = () => {
-        if (this.full.src !== paths.full) { this.full.src = paths.full; }
+        if (tier >= candidates.length) {
+          this._fullLoaded = false;
+          this.full.removeAttribute('src');
+          return;
+        }
+        this.full.src = candidates[tier++];
       };
-      this.full.src = paths.webp || paths.full;
+      if (!candidates.length) return;
+      this.full.src = candidates[0];
+      tier = 1;
     }
 
     /* ---------- camera ---------- */
@@ -190,6 +214,49 @@
         if (target) { this.glideTo(target, 650); return; }
         this.zoomAt(e.clientX, e.clientY, 1.9, true);
       });
+
+      // Keyboard accessibility for pan/zoom. stopPropagation matters: the app
+      // binds Left/Right to beat navigation on the document, and +/-/0 here,
+      // so without it a single keypress would both pan the picture and skip
+      // the beat.
+      el.addEventListener('keydown', (e) => {
+        const pan = 0.08;
+        const keys = ['+', '=', '-', '0', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+        if (!keys.includes(e.key)) return;
+        e.preventDefault();
+        e.stopPropagation();
+        this._interrupt();
+        switch (e.key) {
+          case '+':
+          case '=':
+            this.zoomAt(el.clientWidth / 2, el.clientHeight / 2, 1.15, true);
+            break;
+          case '-':
+            this.zoomAt(el.clientWidth / 2, el.clientHeight / 2, 0.87, true);
+            break;
+          case '0':
+            this.glideTo({ x: 0.5, y: 0.5, scale: 1 }, 600);
+            break;
+          case 'ArrowUp':
+            this.cam.y -= pan / Math.max(1, this.cam.scale);
+            this.clampCam(this.cam); this.apply();
+            break;
+          case 'ArrowDown':
+            this.cam.y += pan / Math.max(1, this.cam.scale);
+            this.clampCam(this.cam); this.apply();
+            break;
+          case 'ArrowLeft':
+            this.cam.x -= pan / Math.max(1, this.cam.scale);
+            this.clampCam(this.cam); this.apply();
+            break;
+          case 'ArrowRight':
+            this.cam.x += pan / Math.max(1, this.cam.scale);
+            this.clampCam(this.cam); this.apply();
+            break;
+          default:
+            break;
+        }
+      });
     }
 
     zoomAt(clientX, clientY, factor, smooth) {
@@ -213,6 +280,17 @@
     }
 
     resize() { this.clampCam(this.cam); this.apply(); }
+
+    /* ---------- programmatic camera control (used by the app's shortcuts) ---------- */
+
+    zoomBy(factor) {
+      this._interrupt();
+      this.zoomAt(this.el.clientWidth / 2, this.el.clientHeight / 2, factor, true);
+    }
+    resetView() {
+      this._interrupt();
+      this.glideTo({ x: 0.5, y: 0.5, scale: 1 }, 600);
+    }
   }
 
   window.KepplerViewer = Viewer;

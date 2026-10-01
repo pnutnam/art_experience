@@ -106,9 +106,14 @@ for audio preloading.)
 
 ## Checks
 
-Stdlib-only smoke test — catches a stale `tour-data.js`, a missing asset, a beat with no
-audio, or a stray heavyweight file swept into the payload. Run it before and after
-uploading:
+Stdlib-only smoke test — catches a stale `tour-data.js`, a missing asset, a beat
+with no audio, or a stray heavyweight file swept into the payload, plus four
+regression groups that guard browser behaviour nothing else can see:
+`accessibility` (artwork alt text, ARIA roles, keyboard operability),
+`journal durability` (a written reflection must survive every way of leaving
+its card), `image tier fallback` (a missing hi-res image must degrade, not
+retry forever) and `cache busting` (every ship-set reference carries a current
+content hash). Run it before and after uploading:
 
 ```bash
 python3 tests/smoke_test.py                     # check the working tree
@@ -156,8 +161,9 @@ third-party calls.
 
 Everything the guide says lives in **`data/tour.json`** — narration text,
 Socratic questions, curator hints, **per-room scholar notes** (shown in the in-app
-"Notes & sources" drawer, key `N`), camera focus points (normalized `x, y, scale`
-per beat), and dwell times for silent-looking beats.
+"Notes & sources" drawer, key `N`), **the artwork description** (`alt` per room —
+what is actually in the frame, for anyone who cannot see it), camera focus points
+(normalized `x, y, scale` per beat), and dwell times for silent-looking beats.
 
 After editing the script, regenerate audio (only changed beats re-synthesize).
 One-time setup first — `work/` is gitignored scratch, so a fresh clone has no
@@ -247,9 +253,18 @@ and peer-reviewed work such as Richard R. John's "Robber Barons Redux"
   when zoomed past ~1.04×.
 - **Privacy.** Journal, progress, and settings live in `localStorage` only. The journal
   is exportable as Markdown from the finale.
-- **Accessibility.** Full transcript panel (T), keyboard controls (space, ←/→, C, T),
-  reduced-motion support, `[hidden]`-safe styling.
+- **Accessibility.** Full transcript panel (T), keyboard controls for both the
+  tour *and* the picture, reduced-motion support, `[hidden]`-safe styling.
+  Each of the four chromolithographs carries a written description of what is
+  actually in the frame (the `alt` field on each room in `tour.json`, drawn from
+  the iconography in `research/DOSSIER.md`), so the one thing the tour is about
+  is not invisible to a screen reader. Beat changes are announced politely; the
+  beat dots are a labelled button group with `aria-current` on the active beat.
 
 ## Keyboard
 
 `space` play/pause · `←`/`→` previous/next beat · `T` transcript · `C` contents · `N` notes & sources · `Esc` close panels
+`+` / `-` zoom the picture · `0` show the whole sheet
+
+Give the picture focus (click it, or Tab to it) and `←`/`→`/`↑`/`↓` pan it
+instead of changing beat — so the artwork is fully operable without a mouse.

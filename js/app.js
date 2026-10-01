@@ -22,7 +22,6 @@
     },
     set(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch { /* private mode */ } },
   };
-  const settings = store.get('keppler.settings.v1', {});
   let journal = store.get('keppler.journal.v1', {});
   let progress = store.get('keppler.progress.v1', null); // {stop, beat}
 
@@ -30,7 +29,6 @@
 
   const TOUR = { stops: [{ id: '_welcome', isWelcome: true, beats: DATA.welcome.beats, ...DATA.welcome }].concat(DATA.stops) };
   let cur = { stop: 0, beat: 0 };
-  let finished = false;
 
   function stopAt(i) { return TOUR.stops[i]; }
   function beatAt(s, b) { return TOUR.stops[s].beats[b]; }
@@ -211,7 +209,7 @@
   function highlightSentence(i, exact) {
     $$('.sent').forEach((n, k) => {
       n.classList.toggle('is-spoken', k < i || (exact && k === i));
-      n.classList.toggle('is-now-sent', exact ? k === i : k === i);
+      n.classList.toggle('is-now-sent', k === i);
     });
   }
 
@@ -244,6 +242,7 @@
   /* ---------- engine ---------- */
 
   function goTo(s, b, autoplay = true, immediate = false) {
+    flushDraft(); // must run before `cur` moves, while the textarea still holds this beat
     stopAudio();
     hideAskCard();
     hideSilence();
@@ -258,9 +257,9 @@
     // passing through beat 0 (resuming mid-room after a reload), so paint
     // whenever the viewer isn't showing this stop's work yet.
     if (stop.isWelcome) {
-      paintStopImage(DATA.welcome.ghostImage);
+      paintStopImage(DATA.welcome.ghostImage, DATA.welcome.alt);
     } else if (b === 0 || paintedImage !== stop.image) {
-      paintStopImage(stop.image);
+      paintStopImage(stop.image, stop.alt);
     }
 
     el.stage.classList.toggle('welcome-mode', !!stop.isWelcome);
@@ -277,9 +276,9 @@
     }
   }
 
-  function paintStopImage(name) {
+  function paintStopImage(name, alt) {
     paintedImage = name;
-    viewer.setImage({ lqip: LQIP[name], mid: DATA.images[name].mid }, ASPECTS[name]);
+    viewer.setImage({ lqip: LQIP[name], mid: DATA.images[name].mid }, ASPECTS[name], alt);
     clearTimeout(fullTimer);
     fullTimer = setTimeout(requestFull, 7000); // prefetch for smooth zooming
   }
@@ -319,8 +318,8 @@
   }
 
   function finishTour() {
+    flushDraft();
     stopAudio();
-    finished = true;
     store.set('keppler.progress.v1', null);
     showScene('finale');
     renderFinale();
@@ -405,15 +404,16 @@
     const stop = stopAt(cur.stop);
     el.hudRoomLabel.textContent = stop.isWelcome ? 'Welcome' : stop.room;
     el.hudRoomTitle.textContent = stop.isWelcome ? 'The Keppler Rooms' : stripQuotes(stop.title);
-    // dots
+    // dots — a plain button group, not a tablist: they jump to a beat rather
+    // than switch a tab panel, and aria-current carries "you are here".
     el.dots.innerHTML = '';
     stop.beats.forEach((b, i) => {
       const d = document.createElement('button');
       d.className = 'beat-dot' + ((b.kind === 'ask' || b.kind === 'reflect') ? ' is-ask' : '');
       d.title = `Beat ${i + 1}`;
-      d.setAttribute('aria-label', `Beat ${i + 1}`);
+      d.setAttribute('aria-label', `Beat ${i + 1}${b.kind === 'ask' || b.kind === 'reflect' ? ', a question' : ''}`);
       if (i < cur.beat) d.classList.add('is-past');
-      if (i === cur.beat) d.classList.add('is-now');
+      if (i === cur.beat) { d.classList.add('is-now'); d.setAttribute('aria-current', 'true'); }
       d.addEventListener('click', () => goTo(cur.stop, i));
       el.dots.appendChild(d);
     });
@@ -511,10 +511,22 @@
   }
 
   let draftTimer = null;
+  function flushDraft() {
+    // Every path that leaves the current beat must land the pending answer
+    // first. The 350ms autosave debounce alone is not enough: a visitor who
+    // types a reflection and hits → (or Leave, or the last beat) would lose
+    // the text, because only the Continue button and the timer saved it.
+    clearTimeout(draftTimer);
+    draftTimer = null;
+    saveJournalDraft();
+  }
   el.askInput.addEventListener('input', () => {
     clearTimeout(draftTimer);
-    draftTimer = setTimeout(saveJournalDraft, 350);
+    draftTimer = setTimeout(flushDraft, 350);
   });
+  // Mobile Safari and back/forward can discard the page without a reload;
+  // the journal is the one thing we promised to keep.
+  window.addEventListener('pagehide', flushDraft);
 
   function renderFinale() {
     // journal entries in tour order
@@ -628,7 +640,7 @@
   });
 
   el.btnContinue.addEventListener('click', () => {
-    saveJournalDraft();
+    flushDraft();
     hideAskCard();
     advance();
   });
@@ -639,6 +651,7 @@
   el.btnTranscript.addEventListener('click', () => togglePanel('transcript'));
   el.btnNotes.addEventListener('click', () => { renderNotes(); togglePanel('notes'); });
   el.btnExit.addEventListener('click', () => {
+    flushDraft();
     stopAudio();
     store.set('keppler.progress.v1', { ...cur });
     updateResume();
@@ -650,10 +663,14 @@
       if (e.key === 'Escape') e.target.blur();
       return;
     }
+    // Beat navigation: capture Left/Right before viewer's keyboard handlers
     if (el.landing.hidden && el.finale.hidden) {
       if (e.key === ' ') { e.preventDefault(); togglePlay(); }
-      if (e.key === 'ArrowRight') advance();
-      if (e.key === 'ArrowLeft') el.prev.click();
+      if (e.key === 'ArrowRight') { e.preventDefault(); advance(); return; }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); el.prev.click(); return; }
+      if (e.key === '+' || e.key === '=') { e.preventDefault(); viewer.zoomBy(1.15); return; }
+      if (e.key === '-') { e.preventDefault(); viewer.zoomBy(0.87); return; }
+      if (e.key === '0') { e.preventDefault(); viewer.resetView(); return; }
       if (e.key === 't' || e.key === 'T') togglePanel('transcript');
       if (e.key === 'c' || e.key === 'C') { renderContents(); togglePanel('contents'); }
       if (e.key === 'n' || e.key === 'N') { renderNotes(); togglePanel('notes'); }
@@ -694,6 +711,7 @@
   /* ---------- boot ---------- */
 
   el.ghost.style.backgroundImage = `url(${DATA.images[DATA.welcome.ghostImage || 'sheol'].mid})`;
+  syncPanelButtons(); // give the panel toggles their initial aria-pressed state
   updateResume();
   showScene('landing');
 })();

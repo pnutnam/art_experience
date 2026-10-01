@@ -35,6 +35,7 @@
   "welcome": {
     "id": "welcome",
     "ghostImage": "sheol",
+    "alt": "A blurred colour cartoon as a backdrop: a horned Devil beside a chained gate on the left, and a sunlit shore with a pavilion on the right.",
     "notes": [
       {
         "head": "How this tour asks questions",
@@ -75,6 +76,7 @@
       "medium": "Chromolithograph centerfold, Puck, v. 17, no. 429",
       "loc": "https://www.loc.gov/item/2011661750/",
       "image": "sheol",
+      "alt": "A colour cartoon divided by light itself: cold dark blue on the left, warm gold on the right. At upper left a horned Devil sits chin-in-hand beside dying furnaces and a great chained gate, next to a sign reading “THIS BUSINESS IS REMOVED TO SHEOL, OPPOSITE.” At lower left Charon poles a ferry across dark water toward the light, while on the right a sunlit shore holds a bandstand, dancers on a lawn, strollers, and a domed pavilion on a hill.",
       "credit": "Library of Congress, LC-DIG-ppmsca-28201",
       "notes": [
         {
@@ -191,6 +193,7 @@
       "medium": "Chromolithograph centerfold, Puck, v. 14, no. 344 — drawn by himself",
       "loc": "https://www.loc.gov/item/92520934/",
       "image": "prodigal_father",
+      "alt": "A colour cartoon of a homecoming mob outside a building entrance. Keppler himself, in a top hat and frock coat, is surrounded by his own cartoonist staff pressing in on him; above in the doorway a preacher in a black robe waves farewell, and at the lower left a goat gnaws at a valise.",
       "credit": "Library of Congress, LC-DIG-ppmsca-28432",
       "notes": [
         {
@@ -270,6 +273,7 @@
       "medium": "Chromolithograph centerfold, Puck — lithograph by J. Ottmann after Keppler's drawing",
       "loc": "https://www.loc.gov/item/2002718861/",
       "image": "bosses_senate",
+      "alt": "A colour cartoon of the Senate chamber in murky umber and green. Tiny senators sit at their desks while enormous bloated money bags in top hats — each with a human face and a name tag — loom over and behind them: Standard Oil, Copper, Sugar, Iron, Steel Beam, Tin, Coal, Paper Bag. A banner overhead reads “This is a Senate of the Monopolists, by the Monopolists, and for the Monopolists,” and a door at the left edge labelled “People’s Entrance” is bolted and barred.",
       "credit": "Library of Congress, LC-USZC4-494",
       "notes": [
         {
@@ -356,6 +360,7 @@
       "medium": "Chromolithograph centerfold, Puck, v. 10, no. 241",
       "loc": "https://www.loc.gov/item/2012647294/",
       "image": "yorktown",
+      "alt": "A colour cartoon of a parade passing a reviewing stand. A dense column marches past: figures dressed as a visiting emperor and a king, others as assorted thieves and politicians on white horses, a band, and a tiger. At the right a dignitary bows from the reviewing stand, the devil and his wife look down from a cloud at the upper right, and a monument under construction stands at the left.",
       "credit": "Library of Congress, LC-DIG-ppmsca-28522",
       "notes": [
         {

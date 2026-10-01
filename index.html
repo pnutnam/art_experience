@@ -6,7 +6,7 @@
 <title>The Keppler Rooms — a slow tour of Puck’s chromolithographs</title>
 <meta name="description" content="A private, guided audio tour of four chromolithographs by Joseph Keppler from Puck magazine — with time to look, and room to wonder. Images from the Library of Congress.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎭</text></svg>">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=66a9969d">
 </head>
 <body>
 
@@ -37,7 +37,7 @@
 
 <!-- ═══════════════ STAGE / GALLERY ═══════════════ -->
 <section id="stage" class="scene" hidden>
-  <div id="viewer" aria-label="Artwork viewer — drag to pan, scroll or pinch to zoom"></div>
+  <div id="viewer" role="group" aria-label="Artwork viewer — arrow keys pan, plus and minus zoom, 0 shows the whole sheet"></div>
 
   <div id="room-card" class="room-card" hidden>
     <p class="room-card-room" id="room-card-room"></p>
@@ -90,8 +90,8 @@
     </button>
     <button id="btn-next" class="console-btn" title="Next beat (→)" aria-label="Next">⏭</button>
     <div class="console-mid">
-      <div class="beat-dots" id="beat-dots" role="tablist" aria-label="Beats in this room"></div>
-      <div class="now-line"><span id="now-playing"></span><span id="time-left"></span></div>
+      <div class="beat-dots" id="beat-dots" role="group" aria-label="Beats in this room"></div>
+      <div class="now-line"><span id="now-playing" aria-live="polite"></span><span id="time-left"></span></div>
     </div>
   </footer>
 
@@ -139,8 +139,8 @@
 </section>
 
 <script src="js/lqip.js?v=15dfdfef"></script>
-<script src="js/tour-data.js?v=31538333"></script>
-<script src="js/viewer.js"></script>
-<script src="js/app.js"></script>
+<script src="js/tour-data.js?v=79575598"></script>
+<script src="js/viewer.js?v=776dec64"></script>
+<script src="js/app.js?v=f89519a1"></script>
 </body>
 </html>
